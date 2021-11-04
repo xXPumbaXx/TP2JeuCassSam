@@ -26,7 +26,7 @@ public class WizardManager : MonoBehaviour
 
         currentHp = STARTING_HP;
     }
-    public void ChangeGhostState(WizardStateToSwitch nextState)
+    public void ChangeWizardState(WizardStateToSwitch nextState)
     {
         wizardState.enabled = false;
 
@@ -53,7 +53,6 @@ public class WizardManager : MonoBehaviour
                 break;
         }
 
-        //wizardState.Init();//Quand on en a besoin c'est là qu'On l'appelle.
         wizardState.enabled = true;
     }
 }
