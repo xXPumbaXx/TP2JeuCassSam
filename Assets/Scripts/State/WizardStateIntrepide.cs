@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class WizardStateIntrepide : WizardState
 {
-    public override void Init()
+    // Start is called before the first frame update
+    void Start()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        WizardBehavior();
+        ManageStateChange();
     }
 
     public override void ManageStateChange()
@@ -17,18 +25,5 @@ public class WizardStateIntrepide : WizardState
     public override void WizardBehavior()
     {
         throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        WizardBehavior();
-        ManageStateChange();
     }
 }
