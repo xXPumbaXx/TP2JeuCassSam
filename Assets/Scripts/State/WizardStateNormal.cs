@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WizardStateNormal : WizardState
 {
-    bool isInBattle;
     GameObject[] projectiles;
+
+    bool isInBattle;
     private Transform enemyPosition;
 
     // Start is called before the first frame update
