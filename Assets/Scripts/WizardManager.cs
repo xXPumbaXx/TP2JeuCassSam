@@ -5,9 +5,7 @@ using UnityEngine;
 public class WizardManager : MonoBehaviour
 {
     //Serialized Field
-    [SerializeField] private Sprite wizardSprite;//Do nothing for now
     [SerializeField] private int STARTING_HP = 100;
-    [SerializeField] private GameManager.Equipe team;
     [SerializeField] private GameObject bulletPrefab;//Do nothing for now - to initialize
 
     public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand }
@@ -15,6 +13,8 @@ public class WizardManager : MonoBehaviour
     //Component
     private SpriteRenderer spriteRenderer;
     private WizardState wizardState;
+    private GameManager.Equipe team;
+    private Sprite wizardSprite;//Do nothing for now
 
     //WizardStats
     private int currentHp;
@@ -60,9 +60,24 @@ public class WizardManager : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        //TO DO
+    }
+
     public GameManager.Equipe GetTeam()
     {
         return team;
+    }
+
+    public void ChangeSprite(Sprite spriteChange)
+    {
+        spriteRenderer.sprite = spriteChange;
+    }
+
+    public void ChangeTeam(GameManager.Equipe newTeam)
+    {
+        team = newTeam;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

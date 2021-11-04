@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> blueTowers;
     [SerializeField] List<GameObject> greenTowers;
+    [SerializeField] Sprite blueWizard;
+    [SerializeField] Sprite greenWizard;
 
     public enum Equipe
     {
