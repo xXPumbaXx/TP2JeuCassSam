@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -43,6 +42,12 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
+    }
+
+    public GameObject getTower()
+    {
+        // TODO: Ajouter gestion de modification bleu/vert
+        return blueTowers[Random.Range(0, blueTowers.Count)];
     }
 
     private void EndGame()

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class WizardStateNormal : WizardState
 {
-    public override void Init()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void ManageStateChange()
     {
         throw new System.NotImplementedException();
@@ -22,7 +17,7 @@ public class WizardStateNormal : WizardState
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
