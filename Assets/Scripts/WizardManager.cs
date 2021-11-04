@@ -7,6 +7,7 @@ public class WizardManager : MonoBehaviour
     //Serialized Field
     [SerializeField] private Sprite wizardSprite;//Do nothing for now
     [SerializeField] private int STARTING_HP = 100;
+    [SerializeField] private GameManager.Equipe team;
     [SerializeField] private GameObject bulletPrefab;//Do nothing for now - to initialize
 
     public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand }
@@ -28,31 +29,48 @@ public class WizardManager : MonoBehaviour
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
     {
-        wizardState.enabled = false;
+        Destroy(wizardState);
 
         switch (nextState)
         {
             case WizardStateToSwitch.Normal:
-                wizardState = gameObject.GetComponent<WizardStateNormal>();
+                wizardState = gameObject.AddComponent<WizardStateNormal>() as WizardStateNormal;
+                //wizardState = gameObject.GetComponent<WizardStateNormal>();
                 break;
             case WizardStateToSwitch.Intrepide:
-                wizardState = gameObject.GetComponent<WizardStateIntrepide>();
+                wizardState = gameObject.AddComponent<WizardStateIntrepide>() as WizardStateIntrepide;
+                //wizardState = gameObject.GetComponent<WizardStateIntrepide>();
                 break;
             case WizardStateToSwitch.Fuite:
-                wizardState = gameObject.GetComponent<WizardStateFuite>();
+                wizardState = gameObject.AddComponent<WizardStateFuite>() as WizardStateFuite;
+                //wizardState = gameObject.GetComponent<WizardStateFuite>();
                 break;
             case WizardStateToSwitch.Planquer:
-                wizardState = gameObject.GetComponent<WizardStatePlanquer>();
+                wizardState = gameObject.AddComponent<WizardStatePlanquer>() as WizardStatePlanquer;
+                //wizardState = gameObject.GetComponent<WizardStatePlanquer>();
                 break;
             case WizardStateToSwitch.Sureté:
-                wizardState = gameObject.GetComponent<WizardStateSureté>();
+                wizardState = gameObject.AddComponent<WizardStateSureté>() as WizardStateSureté;
+                //wizardState = gameObject.GetComponent<WizardStateSureté>();
                 break;
             case WizardStateToSwitch.LastStand:
                 break;
             default:
                 break;
         }
+    }
 
-        wizardState.enabled = true;
+    public GameManager.Equipe GetTeam()
+    {
+        return team;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //Collision
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        //Collision
     }
 }
