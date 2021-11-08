@@ -52,12 +52,20 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
+
+        // TODO: Change tower Event
     }
 
-    public GameObject getTower()
+    public GameObject getTower(Equipe couleur)
     {
-        // TODO: Ajouter gestion de modification bleu/vert
-        return blueTowers[Random.Range(0, blueTowers.Count)];
+        if(couleur == Equipe.BLEU)
+        {
+            return greenTowers[Random.Range(0, greenTowers.Count)];
+        }
+        else
+        {
+            return blueTowers[Random.Range(0, blueTowers.Count)];
+        }
     }
 
     private void EndGame()

@@ -9,13 +9,14 @@ public abstract class WizardState : MonoBehaviour
     protected Transform objectivePosition;
 
     protected float speed;
+    protected float shootingDelay;
+    protected float magicProjectileSpeed;
 
     // Start is called before the first frame update
     void Awake()
     {
         wizardManager = GetComponent<WizardManager>();
-        // TODO: Gérer les couleurs (wizard & tower)
-        objectivePosition = gameManager.getTower().transform;
+        objectivePosition = gameManager.getTower(wizardManager.GetTeam()).transform;
     }
 
     // Update is called once per frame
