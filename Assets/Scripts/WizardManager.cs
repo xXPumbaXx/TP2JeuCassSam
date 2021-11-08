@@ -7,6 +7,8 @@ public class WizardManager : MonoBehaviour
     //Serialized Field
     [SerializeField] private int STARTING_HP = 100;
     [SerializeField] private GameObject bulletPrefab;//Do nothing for now - to initialize
+    [SerializeField] Sprite blueWizard;
+    [SerializeField] Sprite greenWizard;
 
     public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand }
 
@@ -18,6 +20,7 @@ public class WizardManager : MonoBehaviour
 
     //WizardStats
     private int currentHp;
+    private bool isAlive;
 
     void Awake()
     {
@@ -26,6 +29,7 @@ public class WizardManager : MonoBehaviour
         spriteRenderer.sprite = wizardSprite;
 
         currentHp = STARTING_HP;
+        isAlive = false;
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
     {
@@ -70,14 +74,22 @@ public class WizardManager : MonoBehaviour
         return team;
     }
 
-    public void ChangeSprite(Sprite spriteChange)
+    public bool IsAlive()
     {
-        spriteRenderer.sprite = spriteChange;
+        return isAlive;
     }
 
     public void ChangeTeam(GameManager.Equipe newTeam)
     {
         team = newTeam;
+        if (newTeam == GameManager.Equipe.BLEU)
+        {
+            spriteRenderer.sprite = blueWizard;
+        }
+        else
+        {
+            spriteRenderer.sprite = greenWizard;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
