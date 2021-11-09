@@ -34,6 +34,16 @@ public class GameManager : MonoBehaviour
 
         //Variable Init
         wizardSpawnTimer = 0;
+
+        //Spawn all wizard
+        foreach (GameObject tower in blueTowers)
+        {
+            SpawnWizard(tower.transform.position, Equipe.BLEU);
+        }
+        foreach (GameObject tower in greenTowers)
+        {
+            SpawnWizard(tower.transform.position, Equipe.VERT);
+        }
     }
 
     // Update is called once per frame

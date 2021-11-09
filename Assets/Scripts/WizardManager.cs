@@ -26,10 +26,17 @@ public class WizardManager : MonoBehaviour
     {
         wizardState = GetComponent<WizardState>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = wizardSprite;
 
         currentHp = STARTING_HP;
         isAlive = false;
+    }
+    private void OnDisable()
+    {
+        isAlive = false;
+    }
+    private void OnEnable()
+    {
+        isAlive = true;
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
     {
