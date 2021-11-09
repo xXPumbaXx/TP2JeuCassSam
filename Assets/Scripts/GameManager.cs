@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject getTower(Equipe couleur)
     {
-        if(couleur == Equipe.BLEU)
+        if(couleur == Equipe.VERT)
         {
             return greenTowers[Random.Range(0, greenTowers.Count)];
         }
