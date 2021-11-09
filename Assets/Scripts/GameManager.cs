@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject wizardPrefab;
 
     [SerializeField] int wizardPoolSize = 10;
+    [SerializeField] float wizardSpawnInterval = 3;
 
     //Private variable
     private GameObject[] wizardArray;
+    private float wizardSpawnTimer;
 
     public enum Equipe
     {
@@ -23,16 +25,25 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         wizardArray = new GameObject[wizardPoolSize];
+
         for (int i = 0; i < wizardPoolSize; i++)
         {
-            wizardArray[wizardPoolSize] = Instantiate(wizardPrefab);
-            wizardArray[wizardPoolSize].SetActive(false);
+            wizardArray[i] = Instantiate(wizardPrefab);
+            wizardArray[i].SetActive(false);
         }
+
+        //Variable Init
+        wizardSpawnTimer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        wizardSpawnTimer += Time.deltaTime * 1;
+        if (wizardSpawnTimer >= wizardSpawnInterval)
+        {
+            SpawnWizard(new Vector2(0,0), Equipe.BLEU);
+        }
     }
 
     public void LoseATower(GameObject tower, Equipe equipe)

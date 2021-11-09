@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7540650178547986124}
   - component: {fileID: 7952388277486045226}
   m_Layer: 0
-  m_Name: WizardBlue
+  m_Name: Wizard
   m_TagString: Wizard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
