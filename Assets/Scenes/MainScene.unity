@@ -1061,6 +1061,10 @@ MonoBehaviour:
   - {fileID: 1684542438}
   - {fileID: 1188705715}
   - {fileID: 1724917208}
+  wizardPrefab: {fileID: 7340101707399580351, guid: 9d275b617ba36c74d84b3c4cd3930f27, type: 3}
+  wizardPoolSize: 10
+  wizardSpawnInterval: 3
+  maxWizardAliveInTeam: 5
 --- !u!4 &1851017704
 Transform:
   m_ObjectHideFlags: 0

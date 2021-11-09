@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2337851497535560168}
   - component: {fileID: 8120087381809157161}
   - component: {fileID: 9082345110273339155}
+  - component: {fileID: 5981651460839896181}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Tower
@@ -124,3 +125,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 20
   isBlue: 0
+--- !u!50 &5981651460839896181
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580744150619859721}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

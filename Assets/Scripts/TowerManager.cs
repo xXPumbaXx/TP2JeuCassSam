@@ -30,4 +30,9 @@ public class TowerManager : MonoBehaviour
             gameManager.LoseATower(this.gameObject, equipe);
         }
     }
+
+    public GameManager.Equipe GetTeam()
+    {
+        return equipe;
+    }
 }

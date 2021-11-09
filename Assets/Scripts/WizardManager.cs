@@ -37,6 +37,7 @@ public class WizardManager : MonoBehaviour
     private void OnEnable()
     {
         isAlive = true;
+        ChangeWizardState(WizardStateToSwitch.Normal);
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
     {

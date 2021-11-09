@@ -7,12 +7,12 @@ public class WizardStateNormal : WizardState
     GameObject[] projectiles;
 
     bool isInBattle;
-    private Transform enemyPosition;
+    private Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        speed = 3f;
+        speed = 1.5f;
         shootingDelay = 2f;
         magicProjectileSpeed = 2f;
     }
@@ -42,7 +42,7 @@ public class WizardStateNormal : WizardState
                     projectile.SetActive(true);
                     shootingDelay = 2f;
                 }
-                projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, enemyPosition.position, magicProjectileSpeed * Time.deltaTime);
+                projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, targetPosition, magicProjectileSpeed * Time.deltaTime);
             }
         }
         else
@@ -53,24 +53,29 @@ public class WizardStateNormal : WizardState
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Wizard" && collision.gameObject.name != gameObject.name)
+        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
             isInBattle = true;
-            enemyPosition = collision.gameObject.transform;
+            targetPosition = collision.gameObject.transform.position;
+        }
+        if (collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        {
+            isInBattle = true;
+            targetPosition = collision.gameObject.transform.position;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Wizard" && collision.gameObject.name != gameObject.name)
+        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
-            enemyPosition = collision.gameObject.transform;
+            targetPosition = collision.gameObject.transform.position;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Wizard" && collision.gameObject.name != gameObject.name)
+        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
             isInBattle = false;
         }
