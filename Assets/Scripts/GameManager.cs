@@ -10,10 +10,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int wizardPoolSize = 10;
     [SerializeField] float wizardSpawnInterval = 3;
+    [SerializeField] int maxWizardAliveInTeam = 5;
 
     //Private variable
     private GameObject[] wizardArray;
     private float wizardSpawnTimer;
+    private int blueWizardCount;
+    private int greenWizardCount;
 
     public enum Equipe
     {
@@ -49,10 +52,39 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        blueWizardCount = 0;
+        greenWizardCount = 0;
+
+        //Count wizard in each team
+        for (int i = 0; i < wizardArray.Length; i++)
+        {
+            WizardManager wizardManager = wizardArray[i].GetComponent<WizardManager>();
+            if (wizardManager.IsAlive())
+            {
+                if (wizardManager.GetTeam() == Equipe.BLEU)
+                {
+                    blueWizardCount++;
+                }
+                else
+                {
+                    greenWizardCount++;
+                }
+            }
+        }
+
         wizardSpawnTimer += Time.deltaTime * 1;
+        Debug.Log(wizardSpawnTimer);
         if (wizardSpawnTimer >= wizardSpawnInterval)
         {
-            SpawnWizard(new Vector2(0,0), Equipe.BLEU);
+            if (blueWizardCount <= maxWizardAliveInTeam)
+            {
+                SpawnWizard(getTower(Equipe.BLEU).transform.position, Equipe.BLEU);
+            }
+            if (greenWizardCount <= maxWizardAliveInTeam)
+            {
+                SpawnWizard(getTower(Equipe.VERT).transform.position, Equipe.VERT);
+            }
+            wizardSpawnTimer = 0;
         }
     }
 
