@@ -16,6 +16,9 @@ public class WizardManager : MonoBehaviour
     private GameManager.Equipe team;
     private Sprite wizardSprite;//Do nothing for now
 
+    //Variable
+    private int kills;
+
     void Awake()
     {
         wizardState = GetComponent<WizardState>();
@@ -25,6 +28,7 @@ public class WizardManager : MonoBehaviour
     private void OnEnable()
     {
         ChangeWizardState(WizardStateToSwitch.Normal);
+        kills = 0;
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
     {
@@ -87,6 +91,16 @@ public class WizardManager : MonoBehaviour
     public void GameOver()
     {
         gameObject.SetActive(false);
+    }
+
+    public void GrantKill()
+    {
+        kills++;
+        if (kills >= 3)
+        {
+            //ChangeWizardState(WizardStateToSwitch.Intrepide);
+            Debug.Log("hi");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -6,7 +6,7 @@ public class LivesManager : MonoBehaviour
 {
     [SerializeField] int lives;
 
-    public void LoseALife()
+    public void LoseALife(GameObject source)
     {
         lives--;
         if (lives <= 0)
@@ -19,6 +19,7 @@ public class LivesManager : MonoBehaviour
             {
                 GetComponent<WizardManager>().GameOver();
             }
+            source.GetComponent<WizardManager>().GrantKill();
         }
     }
 }

@@ -36,7 +36,7 @@ public class WizardStateNormal : WizardState
             if(shootingDelay < 0)
             {
                 // wizardManager.Attack();
-                attackTarget.GetComponent<LivesManager>().LoseALife();
+                attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
                 shootingDelay = INITIAL_SHOOTING_DELAY;
             }
         }
