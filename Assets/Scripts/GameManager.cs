@@ -58,10 +58,9 @@ public class GameManager : MonoBehaviour
         //Count wizard in each team
         for (int i = 0; i < wizardArray.Length; i++)
         {
-            WizardManager wizardManager = wizardArray[i].GetComponent<WizardManager>();
-            if (wizardManager.IsAlive())
+            if (wizardArray[i].activeSelf)
             {
-                if (wizardManager.GetTeam() == Equipe.BLEU)
+                if (wizardArray[i].GetComponent<WizardManager>().GetTeam() == Equipe.BLEU)
                 {
                     blueWizardCount++;
                 }
@@ -73,7 +72,7 @@ public class GameManager : MonoBehaviour
         }
 
         wizardSpawnTimer += Time.deltaTime * 1;
-        Debug.Log(wizardSpawnTimer);
+        // Debug.Log(wizardSpawnTimer);
         if (wizardSpawnTimer >= wizardSpawnInterval)
         {
             if (blueWizardCount <= maxWizardAliveInTeam)
@@ -105,8 +104,16 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
-
-        // TODO: Change tower Event
+        else
+        {
+            for (int i = 0; i < wizardArray.Length; i++)
+            {
+                if (wizardArray[i].activeSelf)
+                {
+                    wizardArray[i].GetComponent<WizardState>().ChangeTower();
+                }
+            }
+        }
     }
 
     public GameObject getTower(Equipe couleur)
@@ -123,29 +130,25 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
-        string winners = "";
-        if(blueTowers.Count <= 0)
-        {
-            winners = "green";
-        }
-        else
-        {
-            winners = "bleu";
-        }
+        string winners = (blueTowers.Count <= 0) ? "green" : "blue";
         Debug.Log("The " + winners + " team won!");
+
+        for (int i = 0; i < wizardArray.Length; i++)
+        {
+            wizardArray[i].GetComponent<WizardManager>().ChangeWizardState(WizardManager.WizardStateToSwitch.Inactif);
+        }
     }
 
     private void SpawnWizard(Vector2 spawnPos, Equipe team)//Dont call it if all player are alive
     {
         for (int i = 0; i < wizardPoolSize; i++)
         {
-            WizardManager wizardManager = wizardArray[i].GetComponent<WizardManager>();
-            if (!wizardManager.IsAlive())
+            if (!wizardArray[i].activeSelf)
             {
                 //Spawn
+                wizardArray[i].GetComponent<WizardManager>().ChangeTeam(team);
                 wizardArray[i].SetActive(true);
                 wizardArray[i].transform.position = spawnPos;
-                wizardManager.ChangeTeam(team);
                 return;
             }
         }

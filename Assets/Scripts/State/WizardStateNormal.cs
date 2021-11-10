@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class WizardStateNormal : WizardState
 {
-    GameObject[] projectiles;
-
-    bool isInBattle;
-    private Vector3 targetPosition;
+    private const float INITIAL_SHOOTING_DELAY = 1.0f;
+    private bool isInBattle;
 
     // Start is called before the first frame update
     void Start()
     {
         speed = 1.5f;
-        shootingDelay = 2f;
+        shootingDelay = INITIAL_SHOOTING_DELAY;
         magicProjectileSpeed = 2f;
     }
 
@@ -26,7 +24,7 @@ public class WizardStateNormal : WizardState
 
     public override void ManageStateChange()
     {
-        throw new System.NotImplementedException();
+        // TODO
     }
 
     public override void WizardBehavior()
@@ -35,47 +33,53 @@ public class WizardStateNormal : WizardState
         {
             shootingDelay -= Time.deltaTime;
 
-            foreach(GameObject projectile in projectiles)
+            if(shootingDelay < 0)
             {
-                if (!projectile.activeSelf && shootingDelay < 0)
-                {
-                    projectile.SetActive(true);
-                    shootingDelay = 2f;
-                }
-                projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, targetPosition, magicProjectileSpeed * Time.deltaTime);
+                // wizardManager.Attack();
+                attackTarget.GetComponent<LivesManager>().LoseALife();
+                shootingDelay = INITIAL_SHOOTING_DELAY;
             }
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, objectivePosition.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
             isInBattle = true;
-            targetPosition = collision.gameObject.transform.position;
+            attackTarget = collision.gameObject;
         }
-        if (collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = true;
-            targetPosition = collision.gameObject.transform.position;
+            attackTarget = collision.gameObject;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
-            targetPosition = collision.gameObject.transform.position;
+            attackTarget = collision.gameObject;
+        }
+        if (!isInBattle && collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        {
+            isInBattle = true;
+            attackTarget = collision.gameObject;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        {
+            isInBattle = false;
+        }
+        if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = false;
         }

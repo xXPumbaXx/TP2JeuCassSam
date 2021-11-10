@@ -5,7 +5,6 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
     GameManager gameManager;
-    [SerializeField] int lives;
     [SerializeField] bool isBlue;
     string enemyProjectileName;
     GameManager.Equipe equipe;
@@ -14,25 +13,27 @@ public class TowerManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        enemyProjectileName = isBlue ? "ProjectileGreen" : "ProjectileBlue";
+        // enemyProjectileName = isBlue ? "ProjectileGreen" : "ProjectileBlue";
         equipe = isBlue ? GameManager.Equipe.BLEU : GameManager.Equipe.VERT;
     }
 
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if(collision.gameObject.name == enemyProjectileName)
         {
             lives--;
         }
-        if(lives <= 0)
-        {
-            gameManager.LoseATower(this.gameObject, equipe);
-        }
     }
+    */
 
     public GameManager.Equipe GetTeam()
     {
         return equipe;
+    }
+
+    public void GameOver()
+    {
+        gameManager.LoseATower(gameObject, equipe);
     }
 }

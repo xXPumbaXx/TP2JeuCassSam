@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4000486450060460361}
   - component: {fileID: 7952388277486045226}
   - component: {fileID: 3076057171531234508}
+  - component: {fileID: 1482437247807283001}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Wizard
@@ -148,7 +149,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 1
 --- !u!114 &3076057171531234508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +162,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220c0eb1b8c98414ba2173c876ce50ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  STARTING_HP: 100
   bulletPrefab: {fileID: 7269527868493304454, guid: ea968ce7f3be348428d375fc73415d14, type: 3}
   blueWizard: {fileID: 21300000, guid: 215bf52f58e170b4a83c7762e68f26bc, type: 3}
   greenWizard: {fileID: 21300000, guid: 0e2ffe4c7ddcf464eb70980e1f3a1168, type: 3}
+--- !u!114 &1482437247807283001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7340101707399580351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3429c56e091b243a6c9eed6d52cf61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 20

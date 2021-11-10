@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class WizardManager : MonoBehaviour
 {
-    //Serialized Field
-    [SerializeField] private int STARTING_HP = 100;
     [SerializeField] private GameObject bulletPrefab;//Do nothing for now - to initialize
     [SerializeField] Sprite blueWizard;
     [SerializeField] Sprite greenWizard;
 
-    public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand }
+    public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand, Inactif }
 
     //Component
     private SpriteRenderer spriteRenderer;
@@ -18,25 +16,14 @@ public class WizardManager : MonoBehaviour
     private GameManager.Equipe team;
     private Sprite wizardSprite;//Do nothing for now
 
-    //WizardStats
-    private int currentHp;
-    private bool isAlive;
-
     void Awake()
     {
         wizardState = GetComponent<WizardState>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-        currentHp = STARTING_HP;
-        isAlive = false;
-    }
-    private void OnDisable()
-    {
-        isAlive = false;
-    }
     private void OnEnable()
     {
-        isAlive = true;
         ChangeWizardState(WizardStateToSwitch.Normal);
     }
     public void ChangeWizardState(WizardStateToSwitch nextState)
@@ -67,6 +54,9 @@ public class WizardManager : MonoBehaviour
                 break;
             case WizardStateToSwitch.LastStand:
                 break;
+            case WizardStateToSwitch.Inactif:
+                wizardState = gameObject.AddComponent<WizardStateInactif>();
+                break;
             default:
                 break;
         }
@@ -74,17 +64,12 @@ public class WizardManager : MonoBehaviour
 
     public void Attack()
     {
-        //TO DO
+        // TODO
     }
 
     public GameManager.Equipe GetTeam()
     {
         return team;
-    }
-
-    public bool IsAlive()
-    {
-        return isAlive;
     }
 
     public void ChangeTeam(GameManager.Equipe newTeam)
@@ -98,6 +83,10 @@ public class WizardManager : MonoBehaviour
         {
             spriteRenderer.sprite = greenWizard;
         }
+    }
+    public void GameOver()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
