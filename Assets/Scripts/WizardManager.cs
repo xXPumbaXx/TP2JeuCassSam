@@ -99,7 +99,8 @@ public class WizardManager : MonoBehaviour
         if (kills >= 3)
         {
             //ChangeWizardState(WizardStateToSwitch.Intrepide);
-            Debug.Log("hi");
+            Debug.Log("State change: Intrepide");
+            kills = 0;
         }
     }
 
