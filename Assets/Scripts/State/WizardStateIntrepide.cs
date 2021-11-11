@@ -6,13 +6,15 @@ public class WizardStateIntrepide : WizardState
 {
     private const float INITIAL_SHOOTING_DELAY = 1.0f;
     private bool isInBattle;
+    private bool gotTarget;
 
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1.5f;
+        speed = 2f;
         shootingDelay = INITIAL_SHOOTING_DELAY;
         magicProjectileSpeed = 2f;
+        gotTarget = false;
     }
 
     // Update is called once per frame
@@ -31,18 +33,23 @@ public class WizardStateIntrepide : WizardState
     {
         if (isInBattle)
         {
-            shootingDelay -= Time.deltaTime;
-
-            if (shootingDelay < 0)
-            {
-                // wizardManager.Attack();
-                attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
-                shootingDelay = INITIAL_SHOOTING_DELAY;
-            }
+            Attack();
         }
         else
         {
             transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
+        }
+    }
+
+    private void Attack()
+    {
+        shootingDelay -= Time.deltaTime;
+
+        if (shootingDelay < 0)
+        {
+            // wizardManager.Attack();
+            attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
+            shootingDelay = INITIAL_SHOOTING_DELAY;
         }
     }
 
