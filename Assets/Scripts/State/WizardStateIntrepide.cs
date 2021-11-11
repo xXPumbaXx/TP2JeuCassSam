@@ -39,6 +39,8 @@ public class WizardStateIntrepide : WizardState
         {
             transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
         }
+        // Regenerate all the time
+        Regen();
     }
 
     private void Attack()
@@ -48,7 +50,7 @@ public class WizardStateIntrepide : WizardState
         if (shootingDelay < 0)
         {
             // wizardManager.Attack();
-            attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
+            attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
             shootingDelay = INITIAL_SHOOTING_DELAY;
         }
     }
