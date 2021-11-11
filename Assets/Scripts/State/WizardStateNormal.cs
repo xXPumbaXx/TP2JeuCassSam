@@ -24,7 +24,11 @@ public class WizardStateNormal : WizardState
 
     public override void ManageStateChange()
     {
-        // TODO
+        if(wizardManager.GetKills() >= 3)
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Intrepide);
+            Debug.Log("State change: Intrepide");
+        }
     }
 
     public override void WizardBehavior()
@@ -36,13 +40,21 @@ public class WizardStateNormal : WizardState
             if(shootingDelay < 0)
             {
                 // wizardManager.Attack();
-                attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
+                attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
                 shootingDelay = INITIAL_SHOOTING_DELAY;
             }
         }
         else
         {
+            // Move
             transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
+
+            //Regen
+            regenTime -= Time.deltaTime;
+            if(regenTime <= 0)
+            {
+
+            }
         }
     }
 

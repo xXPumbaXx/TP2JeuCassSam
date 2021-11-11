@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LivesManager : MonoBehaviour
+public class HpManager : MonoBehaviour
 {
     [SerializeField] int lives;
+    private int maxLives;
 
-    public void LoseALife(GameObject source)
+    private void Awake()
+    {
+        maxLives = lives;
+    }
+
+    public void LoseOneHp(GameObject source)
     {
         lives--;
         if (lives <= 0)
@@ -21,6 +27,14 @@ public class LivesManager : MonoBehaviour
             }
 
             source.GetComponent<WizardManager>().GrantKill();
+        }
+    }
+
+    public void RegenOneHp()
+    {
+        if(lives < maxLives)
+        {
+            lives++;
         }
     }
 }
