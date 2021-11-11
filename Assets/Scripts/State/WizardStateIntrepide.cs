@@ -36,7 +36,7 @@ public class WizardStateIntrepide : WizardState
             if (shootingDelay < 0)
             {
                 // wizardManager.Attack();
-                attackTarget.GetComponent<LivesManager>().LoseOneHp(this.gameObject);
+                attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
                 shootingDelay = INITIAL_SHOOTING_DELAY;
             }
         }

@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class HpManager : MonoBehaviour
 {
-    [SerializeField] int lives;
-    private int maxLives;
+    [SerializeField] private int maxHp;
+    private int presentHp;
 
     private void Awake()
     {
-        maxLives = lives;
+        presentHp = maxHp;
     }
 
     public void LoseOneHp(GameObject source)
     {
-        lives--;
-        if (lives <= 0)
+        presentHp--;
+        if (presentHp <= 0)
         {
             if(gameObject.transform.tag == "Tower")
             {
@@ -32,9 +32,14 @@ public class HpManager : MonoBehaviour
 
     public void RegenOneHp()
     {
-        if(lives < maxLives)
+        if(presentHp < maxHp)
         {
-            lives++;
+            presentHp++;
         }
+    }
+
+    public int GetHpPercent()
+    {
+        return presentHp*100/maxHp;
     }
 }

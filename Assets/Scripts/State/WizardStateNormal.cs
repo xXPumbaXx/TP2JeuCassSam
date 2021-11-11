@@ -29,20 +29,18 @@ public class WizardStateNormal : WizardState
             wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Intrepide);
             Debug.Log("State change: Intrepide");
         }
+        if(hpManager.GetHpPercent() <= 25)
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Fuite);
+            Debug.Log("State change: Fuite");
+        }
     }
 
     public override void WizardBehavior()
     {
         if (isInBattle)
         {
-            shootingDelay -= Time.deltaTime;
-
-            if(shootingDelay < 0)
-            {
-                // wizardManager.Attack();
-                attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
-                shootingDelay = INITIAL_SHOOTING_DELAY;
-            }
+            Attack();
         }
         else
         {
@@ -50,11 +48,7 @@ public class WizardStateNormal : WizardState
             transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
 
             //Regen
-            regenTime -= Time.deltaTime;
-            if(regenTime <= 0)
-            {
-
-            }
+            Regen();
         }
     }
 
@@ -94,6 +88,26 @@ public class WizardStateNormal : WizardState
         if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = false;
+        }
+    }
+
+    private void Attack()
+    {
+        shootingDelay -= Time.deltaTime;
+
+        if (shootingDelay < 0)
+        {
+            attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
+            shootingDelay = INITIAL_SHOOTING_DELAY;
+        }
+    }
+
+    private void Regen()
+    {
+        regenTime -= Time.deltaTime;
+        if (regenTime <= 0)
+        {
+            hpManager.RegenOneHp();
         }
     }
 }
