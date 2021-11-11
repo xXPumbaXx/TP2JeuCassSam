@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class WizardStateIntrepide : WizardState
 {
+    private const float INITIAL_SHOOTING_DELAY = 1.0f;
+    private bool isInBattle;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        speed = 1.5f;
+        shootingDelay = INITIAL_SHOOTING_DELAY;
+        magicProjectileSpeed = 2f;
     }
 
     // Update is called once per frame
@@ -24,6 +29,59 @@ public class WizardStateIntrepide : WizardState
 
     public override void WizardBehavior()
     {
-        throw new System.NotImplementedException();
+        if (isInBattle)
+        {
+            shootingDelay -= Time.deltaTime;
+
+            if (shootingDelay < 0)
+            {
+                // wizardManager.Attack();
+                attackTarget.GetComponent<LivesManager>().LoseALife(this.gameObject);
+                shootingDelay = INITIAL_SHOOTING_DELAY;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, towerObjectivePosition.position, speed * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        {
+            isInBattle = true;
+            attackTarget = collision.gameObject;
+        }
+        if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        {
+            isInBattle = true;
+            attackTarget = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        {
+            attackTarget = collision.gameObject;
+        }
+        if (!isInBattle && collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        {
+            isInBattle = true;
+            attackTarget = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
+        {
+            isInBattle = false;
+        }
+        if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
+        {
+            isInBattle = false;
+        }
     }
 }

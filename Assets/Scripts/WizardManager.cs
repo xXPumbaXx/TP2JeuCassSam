@@ -96,12 +96,11 @@ public class WizardManager : MonoBehaviour
     public void GrantKill()
     {
         kills++;
-        if (kills >= 3)
-        {
-            //ChangeWizardState(WizardStateToSwitch.Intrepide);
-            Debug.Log("State change: Intrepide");
-            kills = 0;
-        }
+    }
+
+    public int GetKills()
+    {
+        return kills;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

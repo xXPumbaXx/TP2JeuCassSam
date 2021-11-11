@@ -19,6 +19,7 @@ public class LivesManager : MonoBehaviour
             {
                 GetComponent<WizardManager>().GameOver();
             }
+
             source.GetComponent<WizardManager>().GrantKill();
         }
     }
