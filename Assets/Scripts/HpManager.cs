@@ -5,7 +5,7 @@ using UnityEngine;
 public class HpManager : MonoBehaviour
 {
     [SerializeField] private int maxHp;
-    private int presentHp;
+    [SerializeField] private int presentHp; // La valeur est sérialisée pour voir les changement dans l'inspecteur d'Unity
 
     private void Awake()
     {

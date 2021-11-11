@@ -43,6 +43,15 @@ public abstract class WizardState : MonoBehaviour
         }
     }
 
+    protected void Regen()
+    {
+        regenTime -= Time.deltaTime;
+        if (regenTime <= 0)
+        {
+            hpManager.RegenOneHp();
+        }
+    }
+
     public abstract void WizardBehavior();
     public abstract void ManageStateChange();
 }

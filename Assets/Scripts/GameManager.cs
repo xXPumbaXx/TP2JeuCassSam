@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private float wizardSpawnTimer;
     private int blueWizardCount;
     private int greenWizardCount;
+    private GameObject[] forests;
 
     public enum Equipe
     {
@@ -46,6 +47,15 @@ public class GameManager : MonoBehaviour
         foreach (GameObject tower in greenTowers)
         {
             SpawnWizard(tower.transform.position, Equipe.VERT);
+        }
+
+        // List all forests
+        int index = 0;
+        forests = new GameObject[6];
+        foreach (Transform child in GameObject.Find("Forests").transform)
+        {
+            forests[index] = child.gameObject;
+            index++;
         }
     }
 
@@ -126,6 +136,16 @@ public class GameManager : MonoBehaviour
         {
             return blueTowers[Random.Range(0, blueTowers.Count)];
         }
+    }
+    public GameObject[] getAllActiveTeamTowers(Equipe couleur)
+    {
+        List<GameObject> teamTowers = (couleur == Equipe.VERT) ? greenTowers : blueTowers;
+        return teamTowers.ToArray();
+    }
+
+    public GameObject[] getAllForests()
+    {
+        return forests;
     }
 
     private void EndGame()

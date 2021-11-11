@@ -101,13 +101,4 @@ public class WizardStateNormal : WizardState
             shootingDelay = INITIAL_SHOOTING_DELAY;
         }
     }
-
-    private void Regen()
-    {
-        regenTime -= Time.deltaTime;
-        if (regenTime <= 0)
-        {
-            hpManager.RegenOneHp();
-        }
-    }
 }
