@@ -8,14 +8,17 @@ public abstract class WizardState : MonoBehaviour
     protected GameManager gameManager;
     protected WizardManager wizardManager;
     protected Transform towerObjectivePosition;
-    protected GameObject attackTarget;
     protected HpManager hpManager;
+
+    private GameObject attackTarget;
+    private HpManager targetHpManager;
 
     protected float speed;
     protected float shootingDelay;
     protected float magicProjectileSpeed;
     protected float regenTime;
-    protected const float INITIAL_REGEN_TIME = 5.0f;
+    protected float initialRegenTime = 5.0f;
+    protected const float INITIAL_SHOOTING_DELAY = 1.0f;
     protected GameManager.Equipe team;
     private GameManager.Equipe otherTeam;
 
@@ -32,7 +35,7 @@ public abstract class WizardState : MonoBehaviour
         otherTeam = (wizardManager.GetTeam() == GameManager.Equipe.BLEU) ? GameManager.Equipe.VERT : GameManager.Equipe.BLEU;
         towerObjectivePosition = gameManager.getTower(otherTeam).transform;
         team = wizardManager.GetTeam();
-        regenTime = INITIAL_REGEN_TIME;
+        regenTime = initialRegenTime;
     }
 
     public void ChangeTower()
@@ -43,12 +46,35 @@ public abstract class WizardState : MonoBehaviour
         }
     }
 
+    protected void SetRegenTime(float time)
+    {
+        initialRegenTime = time;
+    }
+
     protected void Regen()
     {
         regenTime -= Time.deltaTime;
         if (regenTime <= 0)
         {
             hpManager.RegenOneHp();
+            regenTime = initialRegenTime;
+        }
+    }
+
+    protected void SwitchAttackTarget(GameObject target)
+    {
+        attackTarget = target;
+        targetHpManager = attackTarget.GetComponent<HpManager>();
+    }
+
+    protected void Attack()
+    {
+        shootingDelay -= Time.deltaTime;
+
+        if (shootingDelay < 0)
+        {
+            targetHpManager.LoseOneHp(this.gameObject);
+            shootingDelay = INITIAL_SHOOTING_DELAY;
         }
     }
 

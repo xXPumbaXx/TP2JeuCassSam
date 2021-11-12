@@ -7,9 +7,14 @@ public class HpManager : MonoBehaviour
     [SerializeField] private int maxHp;
     [SerializeField] private int presentHp; // La valeur est sérialisée pour voir les changement dans l'inspecteur d'Unity
 
+    private TowerManager towerManager;
+    private WizardManager wizardManager;
+
     private void Awake()
     {
         presentHp = maxHp;
+        towerManager = GetComponent<TowerManager>();
+        wizardManager = GetComponent<WizardManager>();
     }
 
     public void LoseOneHp(GameObject source)
@@ -19,13 +24,15 @@ public class HpManager : MonoBehaviour
         {
             if(gameObject.transform.tag == "Tower")
             {
-                GetComponent<TowerManager>().GameOver();
+                towerManager.GameOver();
             }
             else
             {
-                GetComponent<WizardManager>().GameOver();
+                wizardManager.GameOver();
             }
 
+            // Le Wizard Manager ici n'est pas le même composant que la propriété "wizardManager"
+            // et change continuellement selon la source
             source.GetComponent<WizardManager>().GrantKill();
         }
     }

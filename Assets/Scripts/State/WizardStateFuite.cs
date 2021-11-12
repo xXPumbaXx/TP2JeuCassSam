@@ -66,7 +66,7 @@ public class WizardStateFuite : WizardState
         foreach (GameObject zone in safeZones)
         {
             float newDistance = Vector2.Distance(wizardPosition, zone.transform.position);
-            if (distance > newDistance)
+            if (distance > newDistance && distance > 1) // Un sorcier ne doit pas fuire dans une foret/tour qu'il est déjà dedans
             {
                 safeZoneObjective = zone;
                 distance = newDistance;

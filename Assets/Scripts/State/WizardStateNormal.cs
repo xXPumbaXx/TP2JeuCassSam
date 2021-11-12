@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WizardStateNormal : WizardState
 {
-    private const float INITIAL_SHOOTING_DELAY = 1.0f;
     private bool isInBattle;
 
     // Start is called before the first frame update
@@ -57,12 +56,12 @@ public class WizardStateNormal : WizardState
         if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
         if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
     }
 
@@ -70,12 +69,12 @@ public class WizardStateNormal : WizardState
     {
         if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
         if (!isInBattle && collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
     }
 
@@ -88,17 +87,6 @@ public class WizardStateNormal : WizardState
         if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = false;
-        }
-    }
-
-    private void Attack()
-    {
-        shootingDelay -= Time.deltaTime;
-
-        if (shootingDelay < 0)
-        {
-            attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
-            shootingDelay = INITIAL_SHOOTING_DELAY;
         }
     }
 }
