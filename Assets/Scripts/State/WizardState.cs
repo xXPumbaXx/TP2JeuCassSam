@@ -19,6 +19,7 @@ public abstract class WizardState : MonoBehaviour
     protected float regenTime;
     protected float initialRegenTime = 5.0f;
     protected const float INITIAL_SHOOTING_DELAY = 1.0f;
+    private const int MAX_ATTACK_DAMAGE = 5;
     protected GameManager.Equipe team;
     private GameManager.Equipe otherTeam;
 
@@ -73,9 +74,14 @@ public abstract class WizardState : MonoBehaviour
 
         if (shootingDelay < 0)
         {
-            targetHpManager.LoseOneHp(this.gameObject);
+            targetHpManager.LoseHp(gameObject, Random.Range(0, MAX_ATTACK_DAMAGE));
             shootingDelay = INITIAL_SHOOTING_DELAY;
         }
+    }
+
+    public void ChangeSpeed(float speedChange)
+    {
+        speed += speedChange;
     }
 
     public abstract void WizardBehavior();

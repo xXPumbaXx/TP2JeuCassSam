@@ -18,6 +18,7 @@ public class WizardManager : MonoBehaviour
 
     //Variable
     private int kills;
+    private int protection = 0;
 
     void Awake()
     {
@@ -101,6 +102,16 @@ public class WizardManager : MonoBehaviour
     public int GetKills()
     {
         return kills;
+    }
+
+    public int GetProtection()
+    {
+        return protection;
+    }
+
+    public void SetProtection(int protection)
+    {
+        this.protection = protection;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

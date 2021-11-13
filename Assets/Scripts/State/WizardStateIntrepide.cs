@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WizardStateIntrepide : WizardState
 {
-    private const float INITIAL_SHOOTING_DELAY = 1.0f;
     private bool isInBattle;
     private bool gotTarget;
 

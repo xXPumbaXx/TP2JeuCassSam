@@ -17,9 +17,17 @@ public class HpManager : MonoBehaviour
         wizardManager = GetComponent<WizardManager>();
     }
 
-    public void LoseOneHp(GameObject source)
+    public void LoseHp(GameObject source, int damage)
     {
-        presentHp--;
+        int trueDamage = damage;
+
+        if (gameObject.transform.tag == "Wizard")
+        {
+            trueDamage = trueDamage - wizardManager.GetProtection();
+            if (trueDamage < 0) trueDamage = 0;
+        }
+
+        presentHp -= trueDamage;
         if (presentHp <= 0)
         {
             if(gameObject.transform.tag == "Tower")
