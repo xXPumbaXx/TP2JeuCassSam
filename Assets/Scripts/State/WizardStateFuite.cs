@@ -12,7 +12,7 @@ public class WizardStateFuite : WizardState
         speed = 2.5f;
 
         // Get all safe zones
-        GameObject[] allyTowersPositions = gameManager.getAllActiveTeamTowers(wizardManager.GetTeam());
+        GameObject[] allyTowersPositions = gameManager.getAllActiveTeamTowers(team);
         GameObject[] forestsPositions = gameManager.getAllForests();
 
         safeZones = new GameObject[allyTowersPositions.Length + forestsPositions.Length];

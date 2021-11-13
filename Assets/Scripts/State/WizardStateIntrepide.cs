@@ -43,29 +43,17 @@ public class WizardStateIntrepide : WizardState
         Regen();
     }
 
-    private void Attack()
-    {
-        shootingDelay -= Time.deltaTime;
-
-        if (shootingDelay < 0)
-        {
-            // wizardManager.Attack();
-            attackTarget.GetComponent<HpManager>().LoseOneHp(this.gameObject);
-            shootingDelay = INITIAL_SHOOTING_DELAY;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
         if (collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
     }
 
@@ -73,12 +61,12 @@ public class WizardStateIntrepide : WizardState
     {
         if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != team)
         {
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
         if (!isInBattle && collision.gameObject.tag == "Tower" && collision.gameObject.GetComponent<TowerManager>().GetTeam() != team)
         {
             isInBattle = true;
-            attackTarget = collision.gameObject;
+            SwitchAttackTarget(collision.gameObject);
         }
     }
 
