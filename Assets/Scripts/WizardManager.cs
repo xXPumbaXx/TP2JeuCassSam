@@ -7,10 +7,12 @@ public class WizardManager : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;//Do nothing for now - to initialize
     [SerializeField] Sprite blueWizard;
     [SerializeField] Sprite greenWizard;
+    [SerializeField] int bulletPoolSize = 5;
 
     public enum WizardStateToSwitch { Normal, Intrepide, Fuite, Planquer, Sureté, LastStand, Inactif }
 
     //Component
+    private GameObject[] bulletArray;
     private SpriteRenderer spriteRenderer;
     private WizardState wizardState;
     private GameManager.Equipe team;
@@ -19,6 +21,17 @@ public class WizardManager : MonoBehaviour
     //Variable
     private int kills;
     private int protection = 0;
+
+    private void Start()
+    {
+        bulletArray = new GameObject[bulletPoolSize];
+
+        for (int i = 0; i < bulletPoolSize; i++)
+        {
+            bulletArray[i] = Instantiate(bulletPrefab);
+            bulletArray[i].SetActive(false);
+        }
+    }
 
     void Awake()
     {
@@ -67,9 +80,18 @@ public class WizardManager : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Attack(GameObject target)
     {
-        // TODO
+        for (int i = 0; i < bulletPoolSize; i++)
+        {
+            if (!bulletArray[i].activeSelf)
+            {
+                //Spawn
+                bulletArray[i].GetComponent<BulletScript>().SpawnBullet(target.transform.position, team, this.gameObject);
+                return;
+            }
+        }
+        bulletArray[0].GetComponent<BulletScript>().SpawnBullet(target.transform.position, team, this.gameObject);
     }
 
     public GameManager.Equipe GetTeam()

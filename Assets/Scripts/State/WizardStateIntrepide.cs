@@ -6,6 +6,7 @@ public class WizardStateIntrepide : WizardState
 {
     private bool isInBattle;
     private bool gotTarget;
+    private WizardManager manager;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class WizardStateIntrepide : WizardState
         shootingDelay = INITIAL_SHOOTING_DELAY;
         magicProjectileSpeed = 2f;
         gotTarget = false;
+        manager = GetComponent<WizardManager>();
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class WizardStateIntrepide : WizardState
 
     public override void ManageStateChange()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void WizardBehavior()

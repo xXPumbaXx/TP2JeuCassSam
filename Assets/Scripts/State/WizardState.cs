@@ -5,6 +5,11 @@ using UnityEngine.Events;
 
 public abstract class WizardState : MonoBehaviour
 {
+    //Bullet
+    [SerializeField] int bulletPoolSize = 5;
+    [SerializeField] private GameObject bulletPrefab;
+    private GameObject[] bulletArray;
+
     protected GameManager gameManager;
     protected WizardManager wizardManager;
     protected Transform towerObjectivePosition;
@@ -74,8 +79,12 @@ public abstract class WizardState : MonoBehaviour
 
         if (shootingDelay < 0)
         {
+            Vector2 diference = transform.position - attackTarget.transform.position;
+            float sign = (attackTarget.transform.position.y < transform.position.y) ? -1.0f : 1.0f;
+            transform.rotation = Quaternion.Euler(0, 0, (Vector2.Angle(Vector2.right, diference) * sign));
             targetHpManager.LoseHp(gameObject, Random.Range(0, MAX_ATTACK_DAMAGE));
             shootingDelay = INITIAL_SHOOTING_DELAY;
+            wizardManager.Attack(attackTarget);
         }
     }
 
