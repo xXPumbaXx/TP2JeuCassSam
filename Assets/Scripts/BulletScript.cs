@@ -12,20 +12,24 @@ public class BulletScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private GameObject bulletSource;
     private GameManager.Equipe bulletTeam;
+    private Rigidbody2D rigidbody;
     private const int MAX_ATTACK_DAMAGE = 5;
+    Vector2 moveVector;
 
     // Start is called before the first frame update
     void Awake()
     {
+        moveVector = new Vector2(0, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 vector2 = Vector2.MoveTowards(transform.position, targetPos, 1) * Time.deltaTime * bulletSpeed;
-        
-        transform.position = new Vector2(transform.position.x + vector2.x, transform.position.y + vector2.y);
+        //moveVector = moveVector * Time.deltaTime * bulletSpeed;
+        //transform.position = new Vector2(transform.position.x + moveVector.x, transform.position.y + moveVector.y);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, Time.deltaTime * bulletSpeed);
     }
 
     public void SpawnBullet(Vector2 targetPosition, GameManager.Equipe equipe, GameObject source)
@@ -42,10 +46,15 @@ public class BulletScript : MonoBehaviour
         {
             spriteRenderer.sprite = greenBullet;
         }
+        //moveVector = Vector2.MoveTowards(transform.position, targetPos, 1);
+        //rigidbody.velocity = moveVector;
 
         bulletSource = source;
         transform.position = source.transform.position;
         targetPos = targetPosition;
+
+        Vector2 diference = transform.position - new Vector3(targetPosition.x, targetPosition.y, 0);
+        diference.Normalize();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
