@@ -46,18 +46,13 @@ public class BulletScript : MonoBehaviour
         {
             spriteRenderer.sprite = greenBullet;
         }
-        //moveVector = Vector2.MoveTowards(transform.position, targetPos, 1);
-        //rigidbody.velocity = moveVector;
 
         bulletSource = source;
         transform.position = source.transform.position;
         targetPos = targetPosition;
-
-        Vector2 diference = transform.position - new Vector3(targetPosition.x, targetPosition.y, 0);
-        diference.Normalize();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Wizard" && collision.gameObject.GetComponent<WizardManager>().GetTeam() != bulletTeam)
         {
